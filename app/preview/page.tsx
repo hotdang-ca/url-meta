@@ -1,6 +1,8 @@
 import { Metadata } from 'next';
 import { fetchMetadata } from '@/lib/fetchMetadata';
 import { notFound } from 'next/navigation';
+import Footer from '../components/Footer';
+import CopyButton from '../components/CopyButton';
 
 interface PreviewPageProps {
     searchParams: Promise<{ url?: string }>;
@@ -76,6 +78,8 @@ export default async function PreviewPage({ searchParams }: PreviewPageProps) {
                             Try Another URL
                         </a>
                     </div>
+
+                    <Footer />
                 </div>
             </div>
         );
@@ -123,6 +127,7 @@ export default async function PreviewPage({ searchParams }: PreviewPageProps) {
                         >
                             Visit Site →
                         </a>
+                        <CopyButton url={metadata.url} />
                         <a
                             href="/"
                             className="py-4 px-6 bg-white/5 hover:bg-white/10 border border-white/20 text-white font-semibold rounded-2xl transition-all duration-300 text-center"
@@ -131,6 +136,8 @@ export default async function PreviewPage({ searchParams }: PreviewPageProps) {
                         </a>
                     </div>
                 </div>
+
+                <Footer />
             </div>
         </div>
     );
