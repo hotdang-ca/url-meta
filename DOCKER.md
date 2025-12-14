@@ -73,6 +73,51 @@ The final image:
 
 ## Troubleshooting
 
+### Manifest Format Error on DigitalOcean/Older Docker
+
+If you see this error:
+```
+mediaType in manifest should be 'application/vnd.docker.distribution.manifest.v2+json' 
+not 'application/vnd.oci.image.manifest.v1+json'
+```
+
+This means your Docker daemon is outdated and doesn't support OCI image manifests. Here are your options:
+
+#### Option 1: Update Docker (Recommended)
+```bash
+# SSH into your DigitalOcean droplet
+sudo apt-get update
+sudo apt-get install --only-upgrade docker-ce docker-ce-cli containerd.io
+
+# Verify the version (should be 20.10+ or newer)
+docker --version
+```
+
+#### Option 2: Enable Experimental Features
+Add this to `/etc/docker/daemon.json`:
+```json
+{
+  "experimental": true
+}
+```
+
+Then restart Docker:
+```bash
+sudo systemctl restart docker
+```
+
+#### Option 3: Use Docker Buildx with Platform Flag
+```bash
+docker buildx build --platform linux/amd64 -t url-previewer .
+```
+
+#### Option 4: Pull Image Manually First
+Sometimes pulling the base image separately helps:
+```bash
+docker pull node:20-alpine
+docker build -t url-previewer .
+```
+
 ### Port Already in Use
 If port 3000 is already in use, map to a different port:
 ```bash

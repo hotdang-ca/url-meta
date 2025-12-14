@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Footer from './components/Footer';
 
 export default function Home() {
   const [url, setUrl] = useState('');
@@ -55,6 +56,8 @@ export default function Home() {
             </p>
           </div>
         </div>
+
+        <Footer />
       </div>
     </div>
   );
